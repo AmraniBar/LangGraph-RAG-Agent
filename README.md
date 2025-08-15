@@ -48,6 +48,11 @@ The system follows an intelligent agentic workflow that ensures high-quality res
 - **Fallback Mechanisms**: Re-retrieval if document quality is insufficient
 - **Source Attribution**: Maintains traceability to original NIST documents
 
+## 🛠️ DEMO
+
+https://github.com/user-attachments/assets/42a15dcb-b013-44c7-8d3c-05917d1426b0
+
+
 ## 🛠️ Technology Stack & Rationale
 
 ### **Embeddings: HuggingFace Transformers**
