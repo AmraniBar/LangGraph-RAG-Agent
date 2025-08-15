@@ -19,30 +19,24 @@ This system implements an **Agentic RAG architecture** that goes beyond simple r
 
 The system follows an intelligent agentic workflow that ensures high-quality responses through multiple validation stages:
 
-![RAG Workflow](data\rag_workflow_graph.png)
+![RAG Workflow](data/rag_workflow_graph.png)
 
-### Workflow Steps:
 
-1. **Docs_Vector_Retrieve**: 
-   - Receives user query
-   - Performs semantic search in ChromaDB vector database
-   - Retrieves top-k most relevant document chunks
+## Graph Components 
 
-2. **Grading_Generated_Documents**: 
-   - Analyzes retrieved documents for relevance to the query
-   - Uses LLM-based grader to score document quality
-   - Filters out low-quality or irrelevant documents
-   - Routes to content generation or back to retrieval if needed
+### Nodes:
+- **🔍 Retrieve**: Fetches relevant documents from vector database
+- **📋 Grade Documents**: Evaluates document relevance to the question
+- **💭 Generate**: Creates answers using retrieved context
+- **🔄 Transform Query**: Rewrites questions for better retrieval
 
-3. **Content_Generator**: 
-   - Takes graded, relevant documents as context
-   - Generates comprehensive response using Ollama LLM
-   - Ensures response is grounded in retrieved cybersecurity documents
-
-4. **End**: 
-   - Returns final validated response with source citations
-   - Provides transparency through document references
-
+### Workflow:
+1. **Start** → Question received
+2. **Retrieve** → Search vector database for relevant documents
+3. **Grade** → Evaluate if documents are relevant
+4. **Decision** → Route based on document quality
+5. **Generate** → Create final answer or transform query
+6. **End** → Return response to user
 ### Intelligent Routing:
 - **Document Quality Gates**: Only high-quality, relevant documents proceed to generation
 - **Fallback Mechanisms**: Re-retrieval if document quality is insufficient
@@ -53,31 +47,28 @@ The system follows an intelligent agentic workflow that ensures high-quality res
 ### **Embeddings: HuggingFace Transformers**
 **Model**: `all-MiniLM-L6-v2`
 
-**Why HuggingFace over OpenAI/Cohere:**
+**Why HuggingFace:**
 - ✅ **Cost Efficiency**: No API costs for embedding generation
-- ✅ **Privacy**: Documents processed locally without external API calls
 - ✅ **Offline Capability**: Works without internet connectivity
-- ✅ **Customization**: Can fine-tune for cybersecurity domain if needed
 - ✅ **Performance**: 384-dimension embeddings provide good balance of quality vs. speed
-- ✅ **Compliance**: Meets security requirements for sensitive cybersecurity documents
+
 
 ### **Vector Database: ChromaDB**
-**Why ChromaDB over Pinecone/Weaviate/FAISS:**
+**Why ChromaDB:**
 - ✅ **Simplicity**: Easy to set up and manage without complex infrastructure
+- ✅ **Integration**: Native LangChain integration with minimal setup
 - ✅ **Persistence**: Built-in disk persistence without additional configuration
 - ✅ **Local Deployment**: No external dependencies or cloud requirements
 - ✅ **Performance**: Excellent for document collections up to millions of entries
-- ✅ **Integration**: Native LangChain integration with minimal setup
 - ✅ **Resource Efficiency**: Lower memory footprint compared to FAISS for persistent storage
 - ✅ **Development Friendly**: SQLite backend makes debugging and inspection easy
 
 ### **LLM Backend: Ollama (Llama 3.2)**
 **Why Ollama:**
-- ✅ **Local Inference**: No external API dependencies
-- ✅ **Cost Control**: No per-token charges
-- ✅ **Data Privacy**: Sensitive cybersecurity data stays local
-- ✅ **Customization**: Can swap models based on specific requirements
+- ✅ **Local Inference**: No external API dependencies 
+- ✅ **Cost Control**: No per-token charges ( No money, big wow ! )
 - ✅ **Performance**: Optimized for local GPU/CPU inference
+
 
 ### **UI Framework: Streamlit**
 **Why Streamlit over React/Angular:**
@@ -97,6 +88,7 @@ The system follows an intelligent agentic workflow that ensures high-quality res
 - ✅ **Flexibility**: Easy to modify workflow logic and add new agents
 - ✅ **Integration**: Seamless with LangChain ecosystem
 
+The choice of technologies has other advantages that we haven't talked about, but in the case of this project they don't matter.
 ## 📦 Installation & Setup
 
 ### Option 1: Docker Deployment (Recommended)
@@ -110,7 +102,7 @@ The system follows an intelligent agentic workflow that ensures high-quality res
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd AgenticRAG
+cd AgenticRAG/docker
 
 # Start the system
 docker-compose up --build
