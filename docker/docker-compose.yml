@@ -1,0 +1,36 @@
+
+services:
+  rag-app:
+    build: 
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8501:8501"    # Streamlit
+      - "11434:11434"  # Ollama
+    volumes:
+      - ..:/app                        # Mount entire project directory
+      - ollama_data:/root/.ollama      # Persist Ollama models
+      - chroma_data:/app/data/chroma_db     # Persist ChromaDB data
+    environment:
+      - STREAMLIT_SERVER_HEADLESS=true
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+      - STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+      - OLLAMA_HOST=0.0.0.0:11434
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+    
+volumes:
+  ollama_data:
+    driver: local
+  chroma_data:
+    driver: local
+
+networks:
+  default:
+    driver: bridge

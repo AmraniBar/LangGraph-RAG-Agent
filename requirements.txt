@@ -1,0 +1,14 @@
+langchain
+langgraph
+langchain_ollama
+langchain_huggingface
+langchain_text_splitters
+langchain_experimental
+langchain_community
+langchain_core
+PyPDF2
+pypdf
+chromadb
+streamlit
+sentence-transformers
+pillow
