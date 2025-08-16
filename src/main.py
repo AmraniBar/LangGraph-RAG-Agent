@@ -12,11 +12,9 @@ from agents.graph import create_workflow
 
 
 def setup_rag_system():
-    print("----SETUP: Starting RAG system initialization----", flush=True)
     # Initialize models
     embeddings = get_embeddings()
     llm = get_llm()
-    print("----SETUP: Models initialized----", flush=True)
 
     # Load and process documents
     paths = [

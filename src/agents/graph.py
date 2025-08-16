@@ -2,6 +2,14 @@ from langgraph.graph import END, StateGraph, START
 from agents.nodes import AgentState
 
 def create_workflow(nodes):
+    """Creates a LangGraph workflow for the RAG pipeline.
+    
+    Args:
+        nodes: Dictionary containing the workflow node functions (retrieve, grade_documents, generate)
+        
+    Returns:
+        Compiled workflow graph that processes questions through retrieval, grading, and generation
+    """
     workflow = StateGraph(AgentState)
     
     workflow.add_node("Docs_Vector_Retrieve", nodes["retrieve"])

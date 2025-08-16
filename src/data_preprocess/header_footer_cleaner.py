@@ -48,13 +48,6 @@ def remove_repeating_headers_footers(
         line for line, count in last_line_counts.items() if count >= min_repeat and line
     }
 
-    print(
-        f"----IDENTIFIED {len(headers_to_remove)} HEADERS AND {len(footers_to_remove)} FOOTERS TO REMOVE----"
-    )
-    if headers_to_remove:
-        print("Headers to remove:", list(headers_to_remove)[:3])  # Show first 3
-    if footers_to_remove:
-        print("Footers to remove:", list(footers_to_remove)[:3])  # Show first 3
 
     # Clean documents
     cleaned_docs = []
@@ -87,10 +80,6 @@ def remove_repeating_headers_footers(
             if doc.page_content.strip():
                 cleaned_docs.append(Document(page_content=doc.page_content, metadata=doc.metadata.copy()))
 
-    print(
-        f"----REMOVED {removed_headers} HEADERS AND {removed_footers} FOOTERS FROM {len(docs)} DOCUMENTS----"
-    )
-    print(f"----KEPT {len(cleaned_docs)} DOCUMENTS AFTER CLEANING----")
 
     return cleaned_docs
 
@@ -109,5 +98,4 @@ def clean_chunked_documents(
     Returns:
         List of cleaned Document objects
     """
-    print(f"----CLEANING {len(doc_splits)} CHUNKED DOCUMENTS----")
     return remove_repeating_headers_footers(doc_splits, min_repeat, max_line_len)
